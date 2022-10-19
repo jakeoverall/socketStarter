@@ -10,7 +10,7 @@
 
 <script>
 import { computed } from '@vue/reactivity';
-import { onMounted } from 'vue';
+import { onMounted, watchEffect } from 'vue';
 import { AppState } from '../AppState.js';
 import { LightHandler } from '../handlers/LightHandler.js';
 
@@ -18,6 +18,10 @@ export default {
   setup() {
     onMounted(() => {
       LightHandler.getLightState()
+    })
+
+    watchEffect(() => {
+      document.body.setAttribute('data-theme', AppState.lightIsOn ? 'dark' : 'light')
     })
 
     return {

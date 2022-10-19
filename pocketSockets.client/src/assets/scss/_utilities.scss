@@ -26,8 +26,53 @@
   @return rgba($r, $g, $b, $alpha);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+body {
+  @each $color, $value in map-deep-get($themes, default) {
+    --bs-#{$color}: #{$value};
+    .bg-#{$color} {
+      color: color-yiq($value);
+      background-color: $value !important;
+    }
+    .text-#{$color} {
+      color: $value !important;
+    }
+    $num: 5;
+    @while $num < 100 {
+      $darker: darken($value, $num);
+      $lighter: lighten($value, $num);
+      .bg-#{$color} {
+        &.lighten-#{$num} {
+          color: color-yiq($lighter);
+          background-color: $lighter !important;
+        }
+        &.darken-#{$num} {
+          color: color-yiq($darker);
+          background-color: $darker !important;
+        }
+        &.fade-#{$num} {
+          background-color: fade($value, calc($num / 100)) !important;
+        }
+        &.fade-lighten-#{$num} {
+          background-color: fade($lighter, calc($num / 100)) !important;
+        }
+        &.fade-darken-#{$num} {
+          background-color: fade($darker, calc($num / 100)) !important;
+        }
+      }
+      .text-#{$color}.darken-#{$num} {
+        color: $darker !important;
+      }
+
+      .text-#{$color}.lighten-#{$num} {
+        color: $lighter !important;
+      }
+      $num: $num + 5;
+    }
+  }
+}
+
+:root {
+  body[data-theme="dark"] {
     @each $color, $value in map-deep-get($themes, dark) {
       --bs-#{$color}: #{$value};
       .bg-#{$color} {
@@ -70,8 +115,6 @@
         $num: $num + 5;
       }
     }
-  }
-  body{
     color: var(--bs-light);
   }
 }
