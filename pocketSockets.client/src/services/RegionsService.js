@@ -28,8 +28,8 @@ class RegionsService {
   }
 
   async createMessage(id, message) {
-    const res = await api.post('/api/regions/' + id + '/messages', message)
-    AppState.messages.push(res.data)
+    await api.post('/api/regions/' + id + '/messages', message)
+    // AppState.messages.push(res.data)
   }
 
 

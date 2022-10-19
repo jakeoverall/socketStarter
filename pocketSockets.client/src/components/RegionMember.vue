@@ -1,7 +1,7 @@
 <template>
   <div class="region-member position-relative mb-3">
     <div class="d-flex align-items-center gap-2 clip-text">
-      <i class="mdi mdi-hexagon-slice-6 online position-absolute"></i>
+      <i class="mdi mdi-hexagon-slice-6 position-absolute online" v-if="member.isOnline"></i>
       <img class="elevation-1" :src="member.account.picture" :alt="member.account.name">
       <small>
         <b>

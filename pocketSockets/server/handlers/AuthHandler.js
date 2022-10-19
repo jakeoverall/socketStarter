@@ -1,6 +1,8 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { attachHandlers } from '../../Setup'
+import { dbContext } from '../db/DbContext.js'
 import { accountService } from '../services/AccountService'
+import { logger } from '../utils/Logger.js'
 import { SocketHandler } from '../utils/SocketHandler'
 
 export class AuthHandler extends SocketHandler {
@@ -28,12 +30,19 @@ export class AuthHandler extends SocketHandler {
       attachHandlers(this.io, this.socket, user, limitedProfile)
       this.socket.emit('authenticated', limitedProfile)
       this.io.emit('userConnected', limitedProfile)
+      await dbContext.RegionMembers.updateMany({ accountId: this.profile.id }, { isOnline: true })
     } catch (e) {
       this.socket.emit('error', e)
     }
   }
 
   async onDisconnect() {
-    this.io.emit('userDisconnected', this.profile)
+    try {
+      this.io.emit('userDisconnected', this.profile)
+      await dbContext.RegionMembers.updateMany({ accountId: this.profile.id }, { isOnline: false })
+    } catch (error) {
+      logger.error('[DISCONNECTING_USER_VIA_SOCKET]', error)
+    }
+
   }
 }

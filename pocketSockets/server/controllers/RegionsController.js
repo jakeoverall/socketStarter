@@ -1,6 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { regionsService } from '../services/RegionsService.js'
+import { socketProvider } from '../SocketProvider.js'
 
 export class RegionsController extends BaseController {
   constructor() {
@@ -77,6 +78,7 @@ export class RegionsController extends BaseController {
       req.body.creatorId = req.userInfo.id
       req.body.regionId = req.params.id
       const message = await regionsService.createMessage(req.body)
+      socketProvider.messageRoom(req.params.id, 'MESSAGE_ADDED', message)
       res.send(message)
     } catch (error) {
       next(error)

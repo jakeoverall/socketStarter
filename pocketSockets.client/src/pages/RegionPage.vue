@@ -56,12 +56,13 @@
 <script>
 import { computed } from '@vue/reactivity';
 import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import { AppState } from '../AppState.js';
 import { regionsService } from '../services/RegionsService.js';
 import RegionMember from '../components/RegionMember.vue';
 import Chatbar from '../components/Chatbar.vue';
 import Pop from '../utils/Pop.js';
+import { RegionHandler } from '../handlers/RegionHandler.js';
 
 export default {
   setup() {
@@ -70,7 +71,15 @@ export default {
       regionsService.getRegion(route.params.id);
       regionsService.getRegionMembers(route.params.id);
       regionsService.getRegionMessages(route.params.id);
+
+      RegionHandler.EnterRegion(route.params.id)
     });
+
+    onBeforeRouteLeave(() => {
+      RegionHandler.LeaveRegion(route.params.id)
+    })
+
+
     return {
       region: computed(() => AppState.activeRegion),
       members: computed(() => AppState.members),

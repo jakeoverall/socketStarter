@@ -19,7 +19,8 @@ const routes = [
   {
     path: '/region/:id',
     name: 'Region',
-    component: loadPage('RegionPage')
+    component: loadPage('RegionPage'),
+    beforeEnter: authGuard
   },
   {
     path: '/account',
