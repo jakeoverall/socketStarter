@@ -2,12 +2,23 @@ import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 class RegionsService {
+  async getMessages(id) {
+    const messages = await dbContext.RegionMessages.find({ regionId: id }).populate('creator', 'name picture')
+    return messages
+  }
+
+  async getMembers(id) {
+    const members = await dbContext.RegionMembers.find({ regionId: id }).populate('account', 'name picture')
+    return members
+  }
+
   async join(regionId, userId) {
     const region = await this.getRegionById(regionId)
     const regionMember = await dbContext.RegionMembers.create({
       accountId: userId,
       regionId: region.id,
     })
+    await regionMember.populate('account', 'name picture')
     return regionMember
   }
 
@@ -18,6 +29,7 @@ class RegionsService {
     }
 
     const message = await dbContext.RegionMessages.create(messageData)
+    await message.populate('creator', 'name picture')
     return message
   }
 

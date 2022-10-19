@@ -7,18 +7,46 @@ export class RegionsController extends BaseController {
     super('api/regions')
     this.router
       .get('', this.getAll)
+      .get('/:id', this.getRegion)
+      .get('/:id/members', this.getRegionMembers)
+      .get('/:id/messages', this.getRegionMessages)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
-      .post('/:id/message', this.createMessage)
+      .post('/:id/messages', this.createMessage)
       .post('/:id/join', this.joinRegion)
       .delete('/:id', this.delete)
+  }
+  async getRegionMessages(req, res, next) {
+    try {
+      const messages = await regionsService.getMessages(req.params.id)
+      res.send(messages)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getRegionMembers(req, res, next) {
+    try {
+      const members = await regionsService.getMembers(req.params.id)
+      res.send(members)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async getAll(req, res, next) {
     try {
       const regions = await regionsService.get(req.query)
       return res.send(regions)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getRegion(req, res, next) {
+    try {
+      const region = await regionsService.getRegionById(req.params.id)
+      return res.send(region)
     } catch (error) {
       next(error)
     }

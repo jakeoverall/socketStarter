@@ -11,3 +11,10 @@ export const RegionMemberSchema = new Schema(
 )
 
 RegionMemberSchema.index({ regionId: 1, accountId: 1 }, { unique: true })
+
+RegionMemberSchema.virtual('account', {
+  localField: 'accountId',
+  foreignField: '_id',
+  justOne: true,
+  ref: 'Account'
+})
