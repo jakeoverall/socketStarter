@@ -5,15 +5,8 @@
         <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
       </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
@@ -25,6 +18,7 @@
         </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
+      <LightComponent class="mx-2" />
       <Login />
     </div>
   </nav>
@@ -32,11 +26,12 @@
 
 <script>
 import Login from './Login.vue'
+import LightComponent from './LightComponent.vue';
 export default {
   setup() {
     return {}
   },
-  components: { Login }
+  components: { Login, LightComponent }
 }
 </script>
 
