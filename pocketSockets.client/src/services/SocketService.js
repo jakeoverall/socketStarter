@@ -4,7 +4,7 @@ import { SocketHandler } from '../utils/SocketHandler'
 
 class SocketService extends SocketHandler {
   constructor() {
-    super(true)
+    super()
     this
       .on('error', this.onError)
       .on('LIGHT_STATE', this.setLightState)
@@ -20,6 +20,7 @@ class SocketService extends SocketHandler {
   }
 
   addMessage(message) {
+    console.log('adding message', message)
     addOrSkip(AppState.messages, message)
   }
 

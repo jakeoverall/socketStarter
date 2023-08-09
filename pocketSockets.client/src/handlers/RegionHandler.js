@@ -1,13 +1,19 @@
-import { socketService } from "../services/SocketService.js"
+import { SocketHandler } from "../utils/SocketHandler.js"
 
-export class RegionHandler {
+class RegionHandler extends SocketHandler {
 
-  static EnterRegion(regionId) {
-    socketService.emit('ENTER_REGION', regionId)
+  constructor() {
+    super(true)
   }
 
-  static LeaveRegion(regionId) {
-    socketService.emit('LEAVE_REGION', regionId)
+  EnterRegion(regionId) {
+    this.emit('ENTER_REGION', regionId)
+  }
+
+  LeaveRegion(regionId) {
+    this.emit('LEAVE_REGION', regionId)
   }
 
 }
+
+export const regionHandler = new RegionHandler()

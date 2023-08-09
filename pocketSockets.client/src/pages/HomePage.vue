@@ -1,5 +1,14 @@
 <template>
   <div class="container">
+
+    <div class="row my-3">
+      <div class="col-12 text-end">
+        <button data-bs-toggle="collapse" data-bs-target="#create" class="btn btn-outline-primary">Add Region</button>
+      </div>
+      <div class="col-md-4 collapse" id="create">
+        <RegionForm />
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-4" v-for="region in regions" :key="region.id">
         <RegionCard :region="region" />
@@ -28,6 +37,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

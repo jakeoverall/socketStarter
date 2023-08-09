@@ -6,12 +6,12 @@
           <div class="bg-warning rounded mb-3">
             <div class="bg-info rounded-top mb-1 px-2">
               <b class="badge">
-                {{region.name}}
+                {{ region.name }}
               </b>
             </div>
             <div class="bg-warning rounded-bottom px-2">
               <kbd class="badge bg-warning">
-                Members {{members.length}}
+                Members {{ members.length }}
               </kbd>
             </div>
           </div>
@@ -62,21 +62,22 @@ import { regionsService } from '../services/RegionsService.js';
 import RegionMember from '../components/RegionMember.vue';
 import Chatbar from '../components/Chatbar.vue';
 import Pop from '../utils/Pop.js';
-import { RegionHandler } from '../handlers/RegionHandler.js';
+import { regionHandler } from '../handlers/RegionHandler.js';
 
 export default {
   setup() {
     const route = useRoute();
+
     onMounted(() => {
       regionsService.getRegion(route.params.id);
       regionsService.getRegionMembers(route.params.id);
       regionsService.getRegionMessages(route.params.id);
 
-      RegionHandler.EnterRegion(route.params.id)
+      regionHandler.EnterRegion(route.params.id)
     });
 
     onBeforeRouteLeave(() => {
-      RegionHandler.LeaveRegion(route.params.id)
+      regionHandler.LeaveRegion(route.params.id)
     })
 
 

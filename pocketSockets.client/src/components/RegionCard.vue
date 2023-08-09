@@ -1,7 +1,7 @@
 <template>
-  <div class="region-card my-3">
-    <router-link :to="{name: 'Region', params: {id: region.id}}">
-      <img :src="region.picture" :alt="region.name" class="img-fluid">
+  <div class="card my-3">
+    <router-link :to="{ name: 'Region', params: { id: region.id } }">
+      <img class="selectable" :src="region.picture" :alt="region.name">
     </router-link>
   </div>
 </template>
@@ -20,9 +20,14 @@ export default {
 
 
 <style lang="scss" scoped>
-img {
-  height: 300px;
-  object-fit: contain;
-  object-position: center;
+.card {
+  max-height: 300px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+
+  }
 }
 </style>

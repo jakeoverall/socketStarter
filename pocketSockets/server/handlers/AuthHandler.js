@@ -38,8 +38,10 @@ export class AuthHandler extends SocketHandler {
 
   async onDisconnect() {
     try {
-      this.io.emit('userDisconnected', this.profile)
-      await dbContext.RegionMembers.updateMany({ accountId: this.profile.id }, { isOnline: false })
+      if (this.profile) {
+        this.io.emit('userDisconnected', this.profile)
+        await dbContext.RegionMembers.updateMany({ accountId: this.profile.id }, { isOnline: false })
+      }
     } catch (error) {
       logger.error('[DISCONNECTING_USER_VIA_SOCKET]', error)
     }

@@ -4,14 +4,18 @@ import Pop from "../utils/Pop.js";
 
 function toggleMemberOffline(member) {
   const active = AppState.members.find(m => m.accountId == member.id)
-  active.isOnline = false
-  Pop.toast(`${member.email.split('@')[0]} is offline`, 'warning')
+  if(active){
+    active.isOnline = false
+    Pop.toast(`${member.email.split('@')[0]} is offline`, 'warning')
+  }
 }
 
 function toggleMemberOnline(member) {
   const active = AppState.members.find(m => m.accountId == member.id)
-  active.isOnline = true
-  Pop.success(`${member.email.split('@')[0]} is online`)
+  if(active){
+    active.isOnline = true
+    Pop.success(`${member.email.split('@')[0]} is online`)
+  }
 }
 
 class MemberHandler {

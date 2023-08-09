@@ -66,10 +66,6 @@ export default {
   }
 
   &.self {
-    .content {
-      text-align: right;
-    }
-
     align-self: flex-end;
   }
 }

@@ -2,6 +2,11 @@ import { AppState } from "../AppState.js"
 import { api } from "./AxiosService.js"
 
 class RegionsService {
+  async createRegion(regionData) {
+    const res = await api.post('/api/regions', regionData)
+    AppState.regions.push(res.data)
+  }
+
   async getRegions() {
     const res = await api.get('/api/regions')
     AppState.regions = res.data
